@@ -8,7 +8,7 @@ using NUnit.Framework;
 public class TestsWithDecoratedHttpClient
 {
     private static Lazy<HttpClient> Client = new Lazy<HttpClient>(() => {
-        var client = HttpClientFactory.Create(new DecorativeHandler());
+        var client = HttpClientFactory.Create(new ConsoleDelegatingHandler());
         client.BaseAddress = new Uri("https://postman-echo.com/");
         client.DefaultRequestHeaders.Accept.Clear();
         return client;

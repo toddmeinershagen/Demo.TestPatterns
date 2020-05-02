@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-public class DecorativeHandler : DelegatingHandler
+public class ConsoleDelegatingHandler : DelegatingHandler
 {
     protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage requestMessage, CancellationToken cancellationToken)
     {
