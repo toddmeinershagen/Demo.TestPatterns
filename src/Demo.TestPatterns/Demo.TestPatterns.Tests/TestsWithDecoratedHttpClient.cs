@@ -51,9 +51,13 @@ public class DecorativeHandler : DelegatingHandler
 {
     protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage requestMessage, CancellationToken cancellationToken)
     {
-        await Console.Out.WriteLineAsync($"{TestContext.CurrentContext.Test.Name}:  Before the Http call.");
+        var methodName = TestContext.CurrentContext.Test.Name;
+        var httpMethod = requestMessage.Method;
+        var requestUriString = requestMessage.RequestUri.ToString();
+
+        await Console.Out.WriteLineAsync($"{methodName}:  Before the {httpMethod} call to {requestUriString}.");
         var response = await base.SendAsync(requestMessage, cancellationToken);
-        await Console.Out.WriteLineAsync($"{TestContext.CurrentContext.Test.Name}:  After the Http call.");
+        await Console.Out.WriteLineAsync($"{methodName}:  After the {httpMethod} call to {requestUriString}.");
         
         return response;
     }
