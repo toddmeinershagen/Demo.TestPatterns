@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Demo.TestPatterns.Tests
 {
-    public class PayrollLock : IAsyncDisposable
+    public class PayrollLock : IDisposable, IAsyncDisposable
     {
         private readonly TextWriter _output;
         private readonly int _payRunId;
@@ -15,6 +15,13 @@ namespace Demo.TestPatterns.Tests
             _payRunId = payRunId;
 
             _output.WriteLineAsync($"Locked payroll for pay run id {_payRunId}.").Wait();
+        }
+
+        public void Dispose()
+        {
+            DisposeAsync()
+                .GetAwaiter()
+                .GetResult();
         }
 
         public async ValueTask DisposeAsync()

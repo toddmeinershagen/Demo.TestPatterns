@@ -5,32 +5,24 @@ using System.Threading.Tasks;
 
 namespace Demo.TestPatterns.Tests
 {
-    [Parallelizable(ParallelScope.Children)]
+    [TestFixture]
     public class PayrollLockTests
     {
-        [TestCase()]
-        [TestCase()]
-        [TestCase()]
-        public async Task given_payrun_locked_when_performing_an_action_successfully_then_payrun_unlocked()
+        [Test]
+        public void given_payrun_locked_when_performing_an_action_successfully_then_payrun_unlocked()
         {
             var payRunId = 1201;
 
-            await Task.Delay(TimeSpan.FromSeconds(2));
-
-            await using (var myLock = new PayrollLock(Console.Out, payRunId))
+            using (var myLock = new PayrollLock(Console.Out, payRunId))
             {
-                await Console.Out.WriteLineAsync($"Performing action for pay run id {payRunId}.");
+                Console.Out.WriteLine($"Performing action for pay run id {payRunId}.");
             }
         }
 
-        [TestCase()]
-        [TestCase()]
-        [TestCase()]
+        [Test]
         public async Task given_payrun_locked_when_performing_an_action_with_exception_then_payrun_unlocked()
         {
             var payRunId = 1200;
-
-            await Task.Delay(TimeSpan.FromSeconds(2));
 
             await using (var myLock = new PayrollLock(Console.Out, payRunId))
             {
